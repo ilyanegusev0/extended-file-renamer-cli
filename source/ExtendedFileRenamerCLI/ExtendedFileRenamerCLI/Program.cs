@@ -16,7 +16,7 @@ namespace ExtendedFileRenamerCLI
 
             while (true)
             {
-                Console.Title = "Extended File Renamer v1.0";
+                Console.Title = "Extended File Renamer v1.0.0";
 
                 Console.Clear();
 
