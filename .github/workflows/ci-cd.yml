@@ -9,64 +9,64 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+
     env:
-      DOTNET_VERSION: '8.0.x'
-    
+      DOTNET_VERSION: "8.0.x"
+
     steps:
-    - name: Checkout
-      uses: actions/checkout@v5
-    
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v5
-      with:
-        dotnet-version: ${{ DOTNET_VERSION }}
-    
-    - name: Cache NuGet packages
-      uses: actions/cache@v4
-      with:
-        path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-nuget-
-    
-    - name: Restore dependencies
-      run: dotnet restore
-    
-    - name: Build project
-      run: dotnet build --configuration Release
-    
-    - name: Run tests
-      run: dotnet test --no-build --verbosity normal
-    
-    - name: Upload test results
-      if: success()
-      uses: actions/upload-artifact@v4
-      with:
-        name: test-results
-        path: ./TestResults/
-        
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: ${{ DOTNET_VERSION }}
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build project
+        run: dotnet build --configuration Release
+
+      - name: Run tests
+        run: dotnet test --no-build --verbosity normal
+
+      - name: Upload test results
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: ./TestResults/
+
   build:
     runs-on: ubuntu-latest
     needs: [test]
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x'
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
 
-    - name: Build project
-      run: dotnet build --configuration Release
+      - name: Build project
+        run: dotnet build --configuration Release
 
-    - name: Upload build artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: build-output
-        path: ./bin/Release/
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: ./bin/Release/
 
   deploy:
     runs-on: ubuntu-latest
@@ -76,9 +76,8 @@ jobs:
     environment: staging
 
     steps:
-    - name: Echo deploy
-      run: echo "Deploying to staging..."
+      - name: Echo deploy
+        run: echo "Deploying to staging..."
 
-    - name: Use secret
-      run: echo "Using token: ${{ secrets.DEPLOY_TOKEN }}"
-
+      - name: Use secret
+        run: 'echo "Using token: ${{ secrets.DEPLOY_TOKEN }}"'
