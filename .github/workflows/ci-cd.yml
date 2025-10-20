@@ -31,13 +31,13 @@ jobs:
             ${{ runner.os }}-nuget-
 
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore source/ExtendedFileRenamerCLI/ExtendedFileRenamerCLI.sln
 
       - name: Build project
-        run: dotnet build --configuration Release
+        run: dotnet build source/ExtendedFileRenamerCLI/ExtendedFileRenamerCLI.sln --configuration Release
 
       - name: Run tests
-        run: dotnet test --no-build --verbosity normal
+        run: dotnet test source/ExtendedFileRenamerCLI/ExtendedFileRenamerCLI.sln --no-build --verbosity normal
 
       - name: Upload test results
         if: success()
